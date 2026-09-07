@@ -5,7 +5,7 @@ import AddressForm from "../../components/AddressForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-export const Addresses = () => {
+export const Addresses = ({handleAddressClick = () => {}}) => {
     const { data: addressesData = [], error: addressesError, isLoading: isAddressesLoading } = useGetAddressesQuery();
     const [ deleteAddress, { isLoading: isDeleting, error: deleteError }] = useDeleteAddressMutation();
     const [loadAddressForm, setLoadAddressForm] = useState(false);
@@ -28,7 +28,7 @@ export const Addresses = () => {
         >
             <div className="m-3 sm:m-5">
                 <div className="text-center font-bold underline pb-5">
-                    <p className="text-xl">Addresses</p>
+                    <p className="text-sm sm:text-xl">Addresses</p>
                 </div>
                 {loadAddressForm ?
                     <div>
@@ -38,19 +38,19 @@ export const Addresses = () => {
                         />
                     </div>
                 : addressesData.length > 0 ?
-                    <section className="sm:grid sm:grid-cols-3 rounded-sm flex flex-col gap-6 p-5 justify-around bg-gray-900">
+                    <section className="sm:grid sm:grid-cols-3 rounded-sm flex flex-col gap-6 p-5 justify-around text-xs sm:text-base bg-gray-900">
                         {addressesData.map((obj) => (
                             <div
                                 key={obj.id}
                                 className="w-auto p-5 bg-gray-950 rounded-xs"
-                                // onClick={true ? () => null : () => 'meow'} rendering this page on cart page when placing order to choose address
+                                onClick={() => handleAddressClick({id: obj.id, addressLine1: obj.address_line_1, title: obj.title})}
                             >
                                 <div className="flex justify-between">
                                     <p className="font-bold mb-1">
                                         {obj.title}
                                     </p>
                                     <div onClick={() => handleEditAddress(obj.id)}>
-                                        <FontAwesomeIcon className="text-xl" icon={faPenToSquare} />
+                                        <FontAwesomeIcon className="text-xl text-blue-500" icon={faPenToSquare} />
                                     </div>
                                 </div>
                                 <p>{obj.address_line_1}</p>
@@ -63,7 +63,7 @@ export const Addresses = () => {
                                         {obj.country}
                                     </p>
                                     <div onClick={() => handleDelete(obj.id)}>
-                                        <FontAwesomeIcon className="text-xl" icon={faTrashCan} />
+                                        <FontAwesomeIcon className="text-xl text-red-700" icon={faTrashCan} />
                                     </div>
                                 </div>
                             </div>

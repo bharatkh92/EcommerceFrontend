@@ -16,7 +16,6 @@ import OrdersPage from "./pages/OrdersPage.jsx";
 import Orders from "./features/Orders/Orders.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import OrderItems from "./features/Orders/OrderItems.jsx";
-import Product from "./components/Product.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
@@ -26,7 +25,6 @@ createRoot(document.getElementById("root")).render(
                     <Route index path="home" element={<HomePage/>} />
                     <Route path="products" element={<ProductsPage />}>
                         <Route index element={<Products />} />
-                        <Route path=":productId" element={<Product />} />
                     </Route>
                     <Route path="user">
                         <Route path="profile" element={<ProfilePage />}>
@@ -39,7 +37,7 @@ createRoot(document.getElementById("root")).render(
                         </Route>
                         <Route path="orders" element={<OrdersPage />}>
                             <Route index element={<Orders/>} />
-                            <Route path="items" element={<OrderItems/>} />
+                            <Route path=":orderId" element={<OrderItems/>} />
                         </Route>
                     </Route>
                 </Routes>

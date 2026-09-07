@@ -11,7 +11,7 @@ export const Navbar = () => {
                 <div className="bg-linear-to-t from-black to-gray-500 sm:h-20 h-10 text-white font-extrabold text-xl sm:text-3xl flex justify-center items-center">
                     E-commerce
                 </div>
-                <section className="flex flex-col-reverse text-sm bg-black text-white sm:flex sm:flex-row sm:items-center sm:justify-between sm:text-lg md:text-xl px-1 sm:px-16 py-3 ">
+                <section className="flex flex-col-reverse text-sm font-bold sm:font-bold bg-black text-white sm:flex sm:flex-row sm:items-center sm:justify-between sm:text-lg md:text-2xl px-1 sm:px-10 lg:px-16 py-3 ">
                     <nav className="flex justify-around gap-1 sm:gap-10">
                         <NavLink
                             to="/home"
@@ -66,7 +66,7 @@ export const Navbar = () => {
                     </nav>
                     <div className="flex justify-end pb-3 pr-3 sm:pr-0 sm:pb-0">
                         {user ?
-                            <p>{user.name}
+                            <p className="font-medium">{user.name}
                             <FontAwesomeIcon className="pl-3" icon={faArrowRightFromBracket} />
                             </p>
                         :   <Link to="http://localhost:3000/auth/google">

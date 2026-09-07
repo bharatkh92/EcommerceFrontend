@@ -3,17 +3,17 @@ import {
     useAddAddressMutation,
     useGetAddressQuery,
     useUpdateAddressMutation,
-
 } from "../features/Profile/profileApi";
 import QueryStateHandler from "./QueryStateHandler";
 
 const AddressForm = ({ addressId, addressFormToggle }) => {
-    const { data, error, isLoading } = useGetAddressQuery(addressId, {
-        skip: !addressId,
+    const [errors, setErrors] = useState({
+        addressLine1Error: false,
+        cityError: false,
+        stateError: false,
+        postError: false,
+        countryError: false,
     });
-    const result = data?.[0];
-    const [ updateAddress, { isLoading: isUpdating, error: updateError }] = useUpdateAddressMutation();
-    const [ addAddress, { isLoading: isAdding, error: addError }] = useAddAddressMutation();
     const [formData, setFormData] = useState({
         id: "",
         title: "",
@@ -25,6 +25,14 @@ const AddressForm = ({ addressId, addressFormToggle }) => {
         country: "",
         type: null,
     });
+    const { data, error, isLoading } = useGetAddressQuery(addressId, {
+        skip: !addressId,
+    });
+    const result = data?.[0];
+    const [updateAddress, { isLoading: isUpdating, error: updateError }] =
+        useUpdateAddressMutation();
+    const [addAddress, { isLoading: isAdding, error: addError }] =
+        useAddAddressMutation();
 
     useEffect(() => {
         if (result) {
@@ -43,152 +51,191 @@ const AddressForm = ({ addressId, addressFormToggle }) => {
     }, [result]);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: value
-        }))
+            [name]: value,
+        }));
     };
 
     const handleOnSubmit = async (e) => {
         const { value } = e.target;
+        const newErrors = {};
+        formData.addressLine1.trim() ? newErrors.addressLine1Error = false : newErrors.addressLine1Error = true;
+        formData.city.trim()  ? newErrors.cityError = false : newErrors.cityError = true;
+        formData.state.trim()  ? newErrors.stateError = false : newErrors.stateError = true;
+        formData.post.trim()  ? newErrors.postError = false : newErrors.postError = true;
+        formData.country.trim()  ? newErrors.countryError = false : newErrors.countryError = true;
+        setErrors(newErrors);
         let body = {
-                title: formData.title,
-                address_line_1: formData.addressLine1,
-                address_line_2: formData.addressLine2,
-                city: formData.city,
-                state: formData.state,
-                postal_code: formData.post,
-                country: formData.country,
+            title: formData.title,
+            address_line_1: formData.addressLine1,
+            address_line_2: formData.addressLine2,
+            city: formData.city,
+            state: formData.state,
+            postal_code: formData.post,
+            country: formData.country,
+        };
+        if (!newErrors.addressLine1Error || !newErrors.cityError || !newErrors.stateError || !newErrors.postError || !newErrors.countryError ){
+            if (value === "Edit") {
+                body = {
+                    ...body,
+                    id: formData.id,
+                };
+                const updateResult = await updateAddress(body).unwrap();
+            } else {
+                const addResult = await addAddress(body).unwrap();
             }
-        if (value === "Edit") {
-            body = {
-                ...body,
-                id: formData.id
-            }
-            const updateResult = await updateAddress(body).unwrap();
-        } else {
-            const addResult = await addAddress(body).unwrap();
+            addressFormToggle();
         }
-        addressFormToggle();
-    }
+    };
 
     return (
-        <QueryStateHandler isLoading={isLoading} error={error} className="flex flex-col items-center sm:w-8/12 m-auto rounded-xl bg-gray-900">
+        <QueryStateHandler
+            isLoading={isLoading}
+            error={error}
+            className="flex flex-col items-center sm:w-8/12 m-auto rounded-xl bg-gray-900"
+        >
             <div className="flex flex-col items-center sm:w-8/12 m-auto rounded-xl bg-gray-900">
-
-            <div className="p-3 font-bold ">
-                <p>Address Form</p>
-            </div>
-            <form  className=" w-full sm:w-10/12 mb-4">
-                <div className="flex flex-col  border rounded-md bg-gray-950">
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:pt-4 sm:py-2 ">
-                        <label htmlFor="title">Title</label>
-                        <input
-                            className="border rounded-sm"
-                            type="text"
-                            name="title"
-                            id="title"
-                            maxLength="50"
-                            onChange={handleChange}
-                            value={formData.title}
-                            ></input>
-                    </div>
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
-                        <label htmlFor="addressLine1">Address Line 1 *</label>
-                        <input
-                            className="border rounded-sm"
-                            type="text"
-                            name="addressLine1"
-                            id="addressLine1"
-                            required
-                            maxLength="255"
-                            onChange={handleChange}
-                            value={formData.addressLine1}
-                            ></input>
-                    </div>
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
-                        <label htmlFor="addressLine2">Address Line 2</label>
-                        <input
-                            className="border rounded-sm"
-                            type="text"
-                            name="addressLine2"
-                            id="addressLine2"
-                            maxLength="255"
-                            onChange={handleChange}
-                            value={formData.addressLine2}
-                            ></input>
-                    </div>
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
-                        <label htmlFor="city">City *</label>
-                        <input
-                            className="border rounded-sm"
-                            type="text"
-                            name="city"
-                            id="city"
-                            maxLength="100"
-                            onChange={handleChange}
-                            value={formData.city}
-                            required
-                        ></input>
-                    </div>
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
-                        <label htmlFor="state">State *</label>
-                        <input
-                            className="border rounded-sm"
-                            type="text"
-                            name="state"
-                            id="state"
-                            maxLength="100"
-                            onChange={handleChange}
-                            value={formData.state}
-                            required
-                        ></input>
-                    </div>
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
-                        <label htmlFor="post">Post *</label>
-                        <input
-                            className="border rounded-sm"
-                            type="number"
-                            name="post"
-                            id="post"
-                            maxLength="6"
-                            onChange={handleChange}
-                            value={formData.post}
-                            required
-                        ></input>
-                    </div>
-                    <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
-                        <label htmlFor="country">Country *</label>
-                        <input
-                            className="border rounded-sm"
-                            type="text"
-                            name="country"
-                            id="country"
-                            maxLength="100"
-                            onChange={handleChange}
-                            value={formData.country}
-                            required
-                        ></input>
-                    </div>
-                    <div className="grid grid-cols-2 justify-items-center p-1 sm:px-3 sm:py-2 sm:pb-5 ">
-                        <input
-                            type="button"
-                            value={formData.type ? formData.type : "Submit"}
-                            className="border rounded-sm px-3 bg-green-800"
-                            onClick={handleOnSubmit}
-                            disabled={isUpdating}
-                        ></input>
-                        <input
-                            type="button"
-                            value="Cancel"
-                            onClick={addressFormToggle}
-                            className="border rounded-sm px-3 bg-red-800"
-                        ></input>
-                    </div>
+                <div className="p-3 font-bold ">
+                    <p>Address Form</p>
                 </div>
-            </form>
-                            </div>
+                <form className=" w-full sm:w-10/12 mb-4">
+                    <div className="flex flex-col  border rounded-md bg-gray-950">
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:pt-4 sm:py-2 ">
+                            <label htmlFor="title">Title</label>
+                            <input
+                                className="border rounded-sm"
+                                type="text"
+                                name="title"
+                                id="title"
+                                maxLength="50"
+                                onChange={handleChange}
+                                value={formData.title}
+                            ></input>
+                        </div>
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
+                            <label htmlFor="addressLine1">
+                                Address Line 1 *
+                            </label>
+                            <input
+                                className="border rounded-sm"
+                                type="text"
+                                name="addressLine1"
+                                id="addressLine1"
+                                required
+                                maxLength="255"
+                                onChange={handleChange}
+                                value={formData.addressLine1}
+                            ></input>
+                            {errors.addressLine1Error ?
+                                <p className="text-red-700">
+                                    Address Line can't be empty
+                                </p>
+                            :   ""}
+                        </div>
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
+                            <label htmlFor="addressLine2">Address Line 2</label>
+                            <input
+                                className="border rounded-sm"
+                                type="text"
+                                name="addressLine2"
+                                id="addressLine2"
+                                maxLength="255"
+                                onChange={handleChange}
+                                value={formData.addressLine2}
+                            ></input>
+                        </div>
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
+                            <label htmlFor="city">City *</label>
+                            <input
+                                className="border rounded-sm"
+                                type="text"
+                                name="city"
+                                id="city"
+                                maxLength="100"
+                                onChange={handleChange}
+                                value={formData.city}
+                                required
+                            ></input>
+                            {errors.cityError ?
+                                <p className="text-red-700">
+                                    City can't be empty
+                                </p>
+                            :   ""}
+                        </div>
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
+                            <label htmlFor="state">State *</label>
+                            <input
+                                className="border rounded-sm"
+                                type="text"
+                                name="state"
+                                id="state"
+                                maxLength="100"
+                                onChange={handleChange}
+                                value={formData.state}
+                                required
+                            ></input>
+                            {errors.stateError ?
+                                <p className="text-red-700">
+                                    State can't be empty
+                                </p>
+                            :   ""}
+                        </div>
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
+                            <label htmlFor="post">Post *</label>
+                            <input
+                                className="border rounded-sm"
+                                type="number"
+                                name="post"
+                                id="post"
+                                maxLength="6"
+                                onChange={handleChange}
+                                value={formData.post}
+                                required
+                            ></input>
+                            {errors.postError ?
+                                <p className="text-red-700">
+                                    post can't be empty
+                                </p>
+                            :   ""}
+                        </div>
+                        <div className="grid grid-cols-2 p-1 sm:px-3 sm:py-2 ">
+                            <label htmlFor="country">Country *</label>
+                            <input
+                                className="border rounded-sm"
+                                type="text"
+                                name="country"
+                                id="country"
+                                maxLength="100"
+                                onChange={handleChange}
+                                value={formData.country}
+                                required
+                            ></input>
+                            {errors.countryError ?
+                                <p className="text-red-700">
+                                    Country can't be empty
+                                </p>
+                            :   ""}
+                        </div>
+                        <div className="grid grid-cols-2 justify-items-center p-1 sm:px-3 sm:py-2 sm:pb-5 ">
+                            <input
+                                type="button"
+                                value={formData.type ? formData.type : "Submit"}
+                                className="border rounded-sm px-3 bg-green-800"
+                                onClick={handleOnSubmit}
+                                disabled={isUpdating}
+                            ></input>
+                            <input
+                                type="button"
+                                value="Cancel"
+                                onClick={addressFormToggle}
+                                className="border rounded-sm px-3 bg-red-800"
+                            ></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </QueryStateHandler>
     );
 };
