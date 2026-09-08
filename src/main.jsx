@@ -6,15 +6,15 @@ import { store } from "./store/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import Profile from "./features/Profile/Profile.jsx";
-import Addresses from "./features/Profile/Addresses.jsx";
-import Products from "./features/Products/Products.jsx";
 import CartPage from "./pages/CartPage.jsx";
-import Cart from "./features/Cart/Cart.jsx";
 import OrdersPage from "./pages/OrdersPage.jsx";
-import Orders from "./features/Orders/Orders.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import OrderItems from "./features/Orders/OrderItems.jsx";
+import Products from "./features/Products/Products.jsx";
+import Profile from "./features/profile/Profile.jsx";
+import Cart from "./features/cart/Cart.jsx";
+import Orders from "./features/orders/Orders.jsx";
+import Addresses from "./features/Profile/Addresses.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>

@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { formatAgeString } from "../../utils/formatAgeString";
 import QueryStateHandler from "../../components/QueryStateHandler";
-import { useGetProfileQuery } from "./profileApi";
+import { useGetProfileQuery } from "./profileApi.js";
 
 export const Profile = () => {
     const { data, error, isLoading } = useGetProfileQuery();
