@@ -21,7 +21,7 @@ createRoot(document.getElementById("root")).render(
         <BrowserRouter>
             <Provider store={store}>
                 <Routes>
-                    <Route index path="home" element={<HomePage/>} />
+                    <Route path="/" element={<HomePage/>} />
                     <Route path="products" element={<ProductsPage />}>
                         <Route index element={<Products />} />
                     </Route>
