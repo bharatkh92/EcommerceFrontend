@@ -1,6 +1,6 @@
 import { useState } from "react";
 import QueryStateHandler from "../../components/QueryStateHandler";
-import { useDeleteAddressMutation, useGetAddressesQuery, useLazyGetAddressQuery } from "./profileApi";
+import { useDeleteAddressMutation, useGetAddressesQuery } from "./profileApi";
 import AddressForm from "../../components/AddressForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";

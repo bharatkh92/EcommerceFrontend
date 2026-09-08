@@ -9,12 +9,12 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import OrdersPage from "./pages/OrdersPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import OrderItems from "./features/Orders/OrderItems.jsx";
-import Products from "./features/Products/Products.jsx";
+import OrderItems from "./features/orders/OrderItems.jsx";
+import Products from "./features/products/Products.jsx";
 import Profile from "./features/profile/Profile.jsx";
 import Cart from "./features/cart/Cart.jsx";
 import Orders from "./features/orders/Orders.jsx";
-import Addresses from "./features/Profile/Addresses.jsx";
+import Addresses from "./features/profile/Addresses.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>

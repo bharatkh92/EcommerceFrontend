@@ -7,7 +7,7 @@ import {
 } from "./cartApi";
 import { faSquareMinus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useAddOrderMutation } from "../Orders/ordersApi";
+import { useAddOrderMutation } from "../orders/ordersApi";
 import Addresses from "../Profile/Addresses";
 import { Link } from "react-router-dom";
 
