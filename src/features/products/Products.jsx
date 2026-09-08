@@ -7,7 +7,7 @@ import {
     faCircleArrowLeft,
     faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useGetCartQuery } from "../Cart/cartApi";
+import { useGetCartQuery } from "../cart/cartApi";
 
 export const Products = () => {
     const [page, setPage] = useState(1);
