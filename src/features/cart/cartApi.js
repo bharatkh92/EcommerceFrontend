@@ -5,7 +5,7 @@ export const cartApi = ecommerceApi.injectEndpoints({
         getCart: build.query({
             query: () => "cart",
             providesTags: (result) =>
-                result.cart ?
+                result ?
                     [
                         ...result.cart.map(({ id }) => ({
                             type: "Cart",

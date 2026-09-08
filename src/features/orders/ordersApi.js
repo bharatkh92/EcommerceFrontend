@@ -33,7 +33,7 @@ export const ordersApi = ecommerceApi.injectEndpoints({
             query: (order_id) => ({
                 url: `orders/${order_id}`,
                 method: 'DELETE',
-            }),
+            }), 
             invalidatesTags: (result, error, order_id) => [{ type: 'Orders', id: order_id }]
         })
     }),
@@ -45,5 +45,5 @@ export const {
     useLazyGetOrdersQuery,
     useLazyGetOrderQuery,
     useAddOrderMutation,
-    useDeleteOrderMutation
+    useDeleteOrderMutation   
 } = ordersApi;

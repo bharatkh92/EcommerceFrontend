@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetOrderQuery } from "./ordersApi";
 
 export const OrderItems = () => {
     const { orderId } = useParams();
     const { data, error, isLoading } = useGetOrderQuery(orderId);
     const order = data || [];
-    console.log(order);
     return (
         <div>
             <p className="text-center underline font-bold py-2 text-sm md:text-xl">
@@ -48,6 +47,7 @@ export const OrderItems = () => {
                     ))
                 :   ""}
             </div>
+            <Link to="../../orders" className="text-xl flex justify-center py-1 font-bold underline text-blue-700">Back</Link>
         </div>
     );
 };

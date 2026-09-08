@@ -1,11 +1,19 @@
 import { Link, NavLink } from "react-router-dom";
-import { useGetProfileQuery } from "../features/Profile/profileApi";
+import { useGetProfileQuery, useLogoutMutation } from "../features/Profile/profileApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { ecommerceApi } from "../services/ecommerceApi";
 
 export const Navbar = () => {
         const { data, error, isLoading } = useGetProfileQuery();
+        const [ logout, { error: logoutError, isloading: loggingOut }] = useLogoutMutation();
         const user = data?.[0];
+        const dispatch = useDispatch();
+        const handleLogout = async (id) => {
+            const result = await logout(id).unwrap();
+            dispatch(ecommerceApi.util.resetApiState());
+        }
         return (
             <header className="flex flex-col border-white border-b">
                 <div className="bg-linear-to-t from-black to-gray-500 sm:h-20 h-10 text-white font-extrabold text-xl sm:text-3xl flex justify-center items-center">
@@ -67,10 +75,11 @@ export const Navbar = () => {
                     <div className="flex justify-end pb-3 pr-3 sm:pr-0 sm:pb-0">
                         {user ?
                             <p className="font-medium">{user.name}
-                            <FontAwesomeIcon className="pl-3" icon={faArrowRightFromBracket} />
+                            <FontAwesomeIcon onClick={() => handleLogout(user.id)} className="pl-3" icon={faArrowRightFromBracket} />
                             </p>
                         :   <Link to="http://localhost:3000/auth/google">
                                 Login
+                                <FontAwesomeIcon className="pl-3" icon={faRightToBracket} />
                             </Link>
                         }
                         <p></p>

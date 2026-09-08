@@ -10,7 +10,6 @@ import Profile from "./features/Profile/Profile.jsx";
 import Addresses from "./features/Profile/Addresses.jsx";
 import Products from "./features/Products/Products.jsx";
 import CartPage from "./pages/CartPage.jsx";
-import CartItems from "./features/Cart/CartItems.jsx";
 import Cart from "./features/Cart/Cart.jsx";
 import OrdersPage from "./pages/OrdersPage.jsx";
 import Orders from "./features/Orders/Orders.jsx";
@@ -33,7 +32,6 @@ createRoot(document.getElementById("root")).render(
                         </Route>
                         <Route path="cart" element={<CartPage />}>
                             <Route index element={<Cart />} />
-                            <Route path="items" element={<CartItems />} />
                         </Route>
                         <Route path="orders" element={<OrdersPage />}>
                             <Route index element={<Orders/>} />

@@ -9,14 +9,15 @@ import { faSquareMinus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useAddOrderMutation } from "../Orders/ordersApi";
 import Addresses from "../Profile/Addresses";
+import { Link } from "react-router-dom";
 
 export const Cart = () => {
     const [addressList, setAddressList] = useState(false);
     const [address, setAddress] = useState({ id: null, addressLine1: null, title: null });
     const {
         data: cartData,
-        error: getCartError,
-        isLoading: cartLoading,
+        error,
+        isLoading,
     } = useGetCartQuery();
     const cart = cartData?.cart || [];
     const cartTotal = cartData?.cartTotal || 0;
@@ -28,7 +29,6 @@ export const Cart = () => {
     ] = useDeleteFromCartMutation();
     const [placeOrder, { error: placeOrderError, isLoading: placingOrder }] =
         useAddOrderMutation();
-
     const handlePlusQuantity = async (obj) => {
         if (obj.quantity > 0) {
             const result = await updateCart({
@@ -70,7 +70,7 @@ export const Cart = () => {
     };
 
     return (
-        <QueryStateHandler error={getCartError} isLoading={cartLoading}>
+        <QueryStateHandler error={error} isLoading={isLoading}>
             <p className="text-center font-bold underline text-sm sm:text-2xl mb-2 mt-1">
                 Cart
             </p>
@@ -123,13 +123,14 @@ export const Cart = () => {
                             </div>
                         </div>
                     ))
-                :   <div className="flex justify-center items-center border border-white py-2">
+                :   <div className="flex justify-center gap-2 items-center border border-white py-2">
                         <p>Cart is Empty</p>
+                        <Link to="../../products" className="underline text-blue-700">Shop</Link>
                     </div>
                 }
-                <div className="flex justify-around text-base py-2 border border-white">
+                <div className="flex justify-around text-base font-bold py-2 border border-white">
                     <p>Total</p>
-                    <p className="font-bold sm:text-xl ">$ {cartTotal}</p>
+                    <p className="sm:text-xl ">$ {cartTotal}</p>
                 </div>
             </div>
             {addressList ?

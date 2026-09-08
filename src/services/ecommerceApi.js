@@ -6,6 +6,6 @@ export const ecommerceApi = createApi({
         baseUrl: `http://localhost:3000`,
         credentials: 'include'
     }),
-    tagTypes: ['Address', 'Orders', 'Cart', 'Products'],
+    tagTypes: ['Address', 'Orders', 'Cart', 'Products', 'User'],
     endpoints: () => ({})
 })

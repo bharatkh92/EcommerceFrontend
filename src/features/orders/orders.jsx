@@ -1,7 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useDeleteOrderMutation, useGetOrdersQuery } from "./ordersApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import OrderItems from "./OrderItems";
 import { Link } from "react-router-dom";
 import QueryStateHandler from "../../components/QueryStateHandler";
 

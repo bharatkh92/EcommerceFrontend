@@ -4,6 +4,12 @@ export const profileApi = ecommerceApi.injectEndpoints({
     endpoints: (build) => ({
         getProfile: build.query({
             query: () => `user/profile`,
+            providesTags: (result) => 
+                result ?
+                [{ type: 'User', id: result[0].id }]
+                :
+                [{ type: 'User', id: 'PROFILE' }],
+
         }),
         getAddresses: build.query({
             query: () => `user/addresses`,
@@ -23,13 +29,11 @@ export const profileApi = ecommerceApi.injectEndpoints({
             providesTags: (result, error, id) => [{ type: "Address", id }],
         }),
         addAddress: build.mutation({
-            query: (body) => {
-                return {
+            query: (body) => ({
                     url: `user/addresses`,
                     method: "POST",
                     body,
-                };
-            },
+                }),
             invalidatesTags: [{ type: "Address", id: "LIST" }],
         }),
         updateAddress: build.mutation({
@@ -46,16 +50,21 @@ export const profileApi = ecommerceApi.injectEndpoints({
             ],
         }),
         deleteAddress: build.mutation({
-            query: (id) => {
-                return {
+            query: (id) => ({
                     url: `user/addresses/${id}`,
                     method: "DELETE",
-                };
-            },
+                }),
             invalidatesTags: (result, error, id ) => [
                 { type: "Address", id },
             ],
         }),
+        logout: build.mutation({
+            query: (id) => ({
+                url: `auth/logout`,
+                method: 'POST'
+            }),
+            invalidatesTags: (result, error, id) => [{ type: 'User', id: id }],
+        })
     }),
 });
 
@@ -67,4 +76,5 @@ export const {
     useAddAddressMutation,
     useUpdateAddressMutation,
     useDeleteAddressMutation,
+    useLogoutMutation
 } = profileApi;
