@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useGetProfileQuery, useLogoutMutation } from "../features/Profile/profileApi";
+import { useGetProfileQuery, useLogoutMutation } from "../features/profile/profileApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";

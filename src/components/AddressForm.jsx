@@ -3,7 +3,7 @@ import {
     useAddAddressMutation,
     useGetAddressQuery,
     useUpdateAddressMutation,
-} from "../features/Profile/profileApi";
+} from "../features/profile/profileApi";
 import QueryStateHandler from "./QueryStateHandler";
 
 const AddressForm = ({ addressId, addressFormToggle }) => {

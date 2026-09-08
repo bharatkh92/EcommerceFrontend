@@ -3,7 +3,7 @@ import {
     useAddToCartMutation,
     useDeleteFromCartMutation,
     useUpdateCartMutation,
-} from "../features/Cart/cartApi";
+} from "../features/cart/cartApi";
 import { faSquareMinus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 
 export const Product = ({ product }) => {
