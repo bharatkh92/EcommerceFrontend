@@ -22,7 +22,7 @@ export const Navbar = () => {
                 <section className="flex flex-col-reverse text-sm font-bold sm:font-bold bg-black text-white sm:flex sm:flex-row sm:items-center sm:justify-between sm:text-lg md:text-2xl px-1 sm:px-10 lg:px-16 py-3 ">
                     <nav className="flex justify-around gap-1 sm:gap-10">
                         <NavLink
-                            to="/home"
+                            to="/"
                             className={({ isActive }) =>
                                 isActive ?
                                     "text-gray-400 underline"
