@@ -77,7 +77,7 @@ export const Navbar = () => {
                             <p className="font-medium">{user.name}
                             <FontAwesomeIcon onClick={() => handleLogout(user.id)} className="pl-3" icon={faArrowRightFromBracket} />
                             </p>
-                        :   <Link to="https://ecommercerest.onrender.com//auth/google">
+                        :   <Link to="https://ecommercerest.onrender.com/auth/google">
                                 Login
                                 <FontAwesomeIcon className="pl-3" icon={faRightToBracket} />
                             </Link>
