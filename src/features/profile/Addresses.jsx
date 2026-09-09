@@ -9,9 +9,9 @@ export const Addresses = ({handleAddressClick = () => {}}) => {
     const { data: addressesData = [], error: addressesError, isLoading: isAddressesLoading } = useGetAddressesQuery();
     const [ deleteAddress, { isLoading: isDeleting, error: deleteError }] = useDeleteAddressMutation();
     const [loadAddressForm, setLoadAddressForm] = useState(false);
-    const [addressId, setAddressId] = useState({});
+    const [addressId, setAddressId] = useState(null);
     const addressFormToggle = () => {
-        setLoadAddressForm(false);
+        loadAddressForm ? setLoadAddressForm(false) : setLoadAddressForm(true) ;
     }
     const handleEditAddress = async (id = null) => {
         setAddressId(id);
@@ -82,7 +82,18 @@ export const Addresses = ({handleAddressClick = () => {}}) => {
                         </div>
                         {deleteError ? <p>{deleteError.data.message}</p>: ""}
                     </section>
-                :   "log in"}
+                :   <div
+                            className="w-auto p-5 bg-gray-950 rounded-xs flex flex-col justify-center items-center"
+                        >
+                            <div>
+                                <FontAwesomeIcon
+                                    onClick={addressFormToggle}
+                                    className="text-3xl"
+                                    icon={faCirclePlus}
+                                />
+                            </div>
+                            <p>Add</p>
+                        </div>}
             </div>
         </QueryStateHandler>
     );

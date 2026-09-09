@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { ecommerceApi } from "../services/ecommerceApi";
+const loginURL = import.meta.env.VITE_LOGIN_URL;
 
 export const Navbar = () => {
         const { data, error, isLoading } = useGetProfileQuery();
@@ -77,7 +78,7 @@ export const Navbar = () => {
                             <p className="font-medium">{user.name}
                             <FontAwesomeIcon onClick={() => handleLogout(user.id)} className="pl-3" icon={faArrowRightFromBracket} />
                             </p>
-                        :   <Link to="https://ecommercerest.onrender.com/auth/google">
+                        :   <Link to={loginURL}>
                                 Login
                                 <FontAwesomeIcon className="pl-3" icon={faRightToBracket} />
                             </Link>
