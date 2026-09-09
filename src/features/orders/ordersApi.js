@@ -27,7 +27,7 @@ export const ordersApi = ecommerceApi.injectEndpoints({
                     address_id,
                 },
             }),
-            invalidatesTags: [{ type: "Cart", id: "LIST" }],
+            invalidatesTags: [{ type: "Cart", id: "LIST" }, { type: "Orders", id: "LIST" }],
         }),
         deleteOrder: build.mutation({
             query: (order_id) => ({
