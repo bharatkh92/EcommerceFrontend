@@ -15,6 +15,7 @@ import Profile from "./features/profile/Profile.jsx";
 import Cart from "./features/cart/Cart.jsx";
 import Orders from "./features/orders/Orders.jsx";
 import Addresses from "./features/profile/Addresses.jsx";
+import { Analytics } from "@vercel/analytics/react";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
@@ -39,6 +40,7 @@ createRoot(document.getElementById("root")).render(
                         </Route>
                     </Route>
                 </Routes>
+                <Analytics />
             </Provider>
         </BrowserRouter>
     </StrictMode>,
