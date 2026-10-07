@@ -4,6 +4,7 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import CartPage from "./pages/CartPage.jsx";
@@ -39,6 +40,7 @@ createRoot(document.getElementById("root")).render(
                         </Route>
                     </Route>
                 </Routes>
+                <Analytics />
             </Provider>
         </BrowserRouter>
     </StrictMode>,
